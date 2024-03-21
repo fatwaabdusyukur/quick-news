@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "quick-news",
+  "version": "1.0",
+  "description": "A simple Chrome extension built with Vuejs.",
+  "permissions": [],
+  "icons": {
+    "128": "/img/logo.png"
+  }
+}
