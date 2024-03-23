@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "marcellus";
+  src: url("./../fonts/marcellus.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "roboto";
+  src: url("./../fonts/roboto.ttf") format("truetype");
+}
