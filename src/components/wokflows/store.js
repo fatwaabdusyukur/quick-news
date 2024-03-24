@@ -1,3 +1,4 @@
+import CNN from "@/services/cnn";
 import { createStore } from "vuex";
 
 export default createStore({
@@ -6,6 +7,7 @@ export default createStore({
       open: false,
       input: false,
       popovers: false,
+      cnn: new CNN(),
     };
   },
   mutations: {

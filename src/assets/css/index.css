@@ -11,3 +11,29 @@
   font-family: "roboto";
   src: url("./../fonts/roboto.ttf") format("truetype");
 }
+
+@layer components {
+  .circle {
+    @apply absolute w-5 h-5 bg-blue-500 rounded-full;
+  }
+
+  .circle:first-child {
+    @apply delay-[-.4s];
+  }
+
+  .circle:nth-child(2) {
+    @apply delay-[-.3s];
+  }
+
+  .circle:nth-child(3) {
+    @apply delay-[-.2s];
+  }
+
+  .circle:nth-child(4) {
+    @apply delay-[-.1s];
+  }
+
+  .circle:last-child {
+    @apply delay-0;
+  }
+}

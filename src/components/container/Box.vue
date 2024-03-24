@@ -32,12 +32,11 @@
         </div>
         <SearchInput />
       </div>
-      <div class="p-2">
-        <li>Test</li>
-        <li>Test</li>
-        <li>Test</li>
-        <li>Test</li>
-        <li>Test</li>
+      <div
+        class="px-2 overflow-y-auto overscroll-contain w-full h-full max-h-[calc(100% - 40px)] flex justify-center items-center"
+      >
+        <Loading :loading="news.loading" />
+        <Newslist :news="news.data" />
       </div>
     </div>
   </Transition>
@@ -63,10 +62,17 @@ import {
 } from "@heroicons/vue/24/outline";
 import Popovers from "../container/Popovers.vue";
 import SearchInput from "../input/SearchInput.vue";
+import Loading from "../loading/Loading.vue";
 
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
+
+import { useFetch } from "@/services/use-fetch";
+import Newslist from "../list/Newslist.vue";
 
 const store = useStore();
 const open = computed(() => store.state.open);
+const news = ref({});
+
+onMounted(() => (news.value = useFetch(store.state.cnn.index())));
 </script>
