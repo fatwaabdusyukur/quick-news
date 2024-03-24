@@ -51,7 +51,10 @@ runtime.onInstalled.addListener(async (details) => {
     if (histories.length > 0 && histories !== undefined) {
       await setDataToStorage("history", histories);
     } else {
-      throw new Error("No articles in the browser's history!");
+      runtime.sendMessage({
+        action: "history-alert",
+        msg: "No articles found in the history browser!",
+      });
     }
   }
 });

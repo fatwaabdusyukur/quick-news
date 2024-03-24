@@ -1,44 +1,19 @@
 <template>
-  <Transition>
-    <div
-      class="fixed z-50 top-3 right-1/2 p-2 rounded"
-      :class="background"
-      v-if="state"
-    >
-      <p class="font-light text-gray-900 text-center">{{ msg }}</p>
-    </div>
-  </Transition>
+  <div
+    class="fixed z-50 top-3 right-1/2 py-2 px-3 rounded bg-red-300 border-2 border-red-500 inline-flex justify-between items-center"
+  >
+    <ExclamationTriangleIcon class="w-4 h-4 fill-gray-900 mr-1" />
+    <p class="font-light text-gray-900 text-center text-sm">{{ msg }}</p>
+  </div>
 </template>
 
-<style>
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.9s ease, transform 0.9s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-  transform: translateY(-100%);
-}
-</style>
-
 <script setup>
-import { computed, onMounted } from "vue";
+import { ExclamationTriangleIcon } from "@heroicons/vue/24/solid";
+import { computed } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
-const { state, msg, mode } = computed(() => store.state.alert);
-const background = computed(() =>
-  mode === "success"
-    ? "bg-green-300 border-1 border-green-500"
-    : "bg-red-300 border-1 border-red-500"
-);
+const msg = computed(() => store.state.alert.msg);
 
-onMounted(() =>
-  setTimeout(
-    () => store.commit("openAlert", { state: false, msg: "", mode: "" }),
-    1000
-  )
-);
+setTimeout(() => store.commit("openAlert", { state: false, msg: "" }), 1000);
 </script>

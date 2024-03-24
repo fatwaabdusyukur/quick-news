@@ -8,9 +8,9 @@ export default createStore({
       open: false,
       input: false,
       popovers: false,
-      alert: { state: false, msg: "", mode: "" },
+      alert: { state: false, msg: "" },
       category: 0,
-      news: { data: [], loading: true, error: null },
+      news: { data: [], loading: true },
     };
   },
   mutations: {
@@ -61,15 +61,16 @@ export default createStore({
             newsData = await cnn.technology_news();
             break;
           case 7:
-            newsData = await cnn.entertainment_news();
+            newsData = await cnn.entertaiment_news();
             break;
           default:
             newsData = await cnn.index();
             break;
         }
-        commit("fillNews", { data: newsData, loading: false, error: null });
+        commit("fillNews", { data: newsData, loading: false });
       } catch (e) {
-        commit("fillNews", { data: [], loading: false, error: e.message });
+        commit("fillNews", { data: [], loading: false });
+        commit("openAlert", { state: true, msg: e.message });
       }
     },
   },

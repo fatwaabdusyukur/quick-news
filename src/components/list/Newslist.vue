@@ -2,7 +2,7 @@
   <ul class="w-full h-full py-2">
     <li
       class="relative w-full p-1 bg-[#ececec] rounded mx-1 my-2"
-      v-for="{ title, link } in articles"
+      v-for="({ title, link }, index) in articles"
     >
       <p class="whitespace-nowrap overflow-x-hidden text-ellipsis text-lg">
         {{ title }}
@@ -10,9 +10,14 @@
       <div
         class="absolute right-0 top-0 flex justify-center items-center w-[10%] h-full bg-[#ececec] rounded-r shadow-md"
       >
-        <button>
+        <button
+          class="w-full h-full inline-flex justify-center items-center"
+          @click="openDropdown(index)"
+          :data-index="index"
+        >
           <EllipsisHorizontalIcon class="w-4 h-4 fill-black" />
         </button>
+        <Dropdown v-if="active === index" />
       </div>
     </li>
   </ul>
@@ -20,10 +25,13 @@
 
 <script setup>
 import { EllipsisHorizontalIcon } from "@heroicons/vue/24/solid";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
+import Dropdown from "../container/Dropdown.vue";
 
 const store = useStore();
 const articles = computed(() => store.state.news.data);
-console.log(articles);
+const active = ref(null);
+const openDropdown = (index) =>
+  (active.value = active.value === index ? null : index);
 </script>
