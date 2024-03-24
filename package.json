@@ -8,6 +8,7 @@
     "clean": "rmdir /s /q dist"
   },
   "dependencies": {
+    "ts-sastrawi": "^1.0.1",
     "vue": "^3.4.21"
   },
   "devDependencies": {
@@ -22,6 +23,7 @@
     "csp-html-webpack-plugin": "^5.1.0",
     "css-loader": "^6.10.0",
     "file-loader": "^6.2.0",
+    "json-loader": "^0.5.7",
     "postcss": "^8.4.38",
     "postcss-loader": "^8.1.1",
     "source-map-loader": "^5.0.0",

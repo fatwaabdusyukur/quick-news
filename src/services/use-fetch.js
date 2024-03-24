@@ -1,7 +1,7 @@
 import { ref, watchEffect } from "vue";
 
 export function useFetch(func) {
-  const data = ref(null);
+  const data = ref([]);
   const error = ref(null);
   const loading = ref(true);
 

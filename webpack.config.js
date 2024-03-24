@@ -26,6 +26,7 @@ module.exports = {
   mode: isProduction ? "production" : "development",
   entry: {
     content: path.resolve(__dirname, "./src/content/content.js"),
+    background: path.resolve(__dirname, "./src/background/background.js"),
   },
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -66,6 +67,10 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.json$/,
+        loader: "json-loader",
+      },
     ],
   },
 
@@ -78,6 +83,8 @@ module.exports = {
         { from: "src/assets/css/style.css", to: "style.css" },
         { from: "src/assets/fonts/marcellus.ttf", to: "fonts/marcellus.ttf" },
         { from: "src/assets/fonts/roboto.ttf", to: "fonts/roboto.ttf" },
+        { from: "src/assets/data/news.json", to: "data/news.json" },
+        { from: "src/assets/data/model.json", to: "data/model.json" },
       ],
     }),
     new CleanWebpackPlugin(),

@@ -3,13 +3,16 @@
   "name": "quick-news",
   "version": "1.0",
   "description": "A simple Chrome extension built with Vuejs.",
-  "permissions": ["tabs", "activeTab"],
+  "permissions": ["tabs", "activeTab", "storage", "history"],
   "icons": {
     "128": "/img/logo.png"
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';",
     "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
+  },
+  "background": {
+    "service_worker": "background.bundle.js"
   },
   "content_scripts": [
     {
@@ -25,7 +28,9 @@
         "/img/logo.png",
         "/img/close.png",
         "/fonts/marcellus.ttf",
-        "/fonts/roboto.ttf"
+        "/fonts/roboto.ttf",
+        "/data/news.json",
+        "/data/model.json"
       ],
       "matches": ["http://*/*", "https://*/*", "<all_urls>"]
     }
