@@ -14,7 +14,8 @@ export default {
               "translate(0px, 0px) rotate(0deg) translateX(40px) rotate(0deg)",
           },
           to: {
-            transform: "translate(0px, 0px) rotate(360deg) translateX(40px) rotate(-360deg)"
+            transform:
+              "translate(0px, 0px) rotate(360deg) translateX(40px) rotate(-360deg)",
           },
         },
       },

@@ -1,5 +1,6 @@
 <template>
   <Alert v-if="store.state.alert.state" />
+  <Modal />
   <Box />
   <FlyingButton />
 </template>
@@ -9,6 +10,7 @@ import { useStore } from "vuex";
 import Alert from "./alert/Alert.vue";
 import FlyingButton from "./button/FlyingButton.vue";
 import Box from "./container/Box.vue";
+import Modal from "./container/Modal.vue";
 
 const store = useStore();
 

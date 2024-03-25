@@ -17,7 +17,7 @@
         >
           <EllipsisHorizontalIcon class="w-4 h-4 fill-black" />
         </button>
-        <Dropdown v-if="active === index" />
+        <Dropdown v-if="active === index" :link="link" />
       </div>
     </li>
   </ul>
@@ -30,7 +30,7 @@ import { useStore } from "vuex";
 import Dropdown from "../container/Dropdown.vue";
 
 const store = useStore();
-const articles = computed(() => store.state.news.data);
+const articles = computed(() => store.state.news);
 const active = ref(null);
 const openDropdown = (index) =>
   (active.value = active.value === index ? null : index);

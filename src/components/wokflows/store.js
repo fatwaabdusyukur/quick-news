@@ -9,8 +9,10 @@ export default createStore({
       input: false,
       popovers: false,
       alert: { state: false, msg: "" },
+      modal: false,
       category: 0,
-      news: { data: [], loading: true },
+      loading: true,
+      news: [],
     };
   },
   mutations: {
@@ -26,16 +28,23 @@ export default createStore({
     openAlert(state, value) {
       state.alert = value;
     },
+    openModal(state) {
+      state.modal = !state.modal;
+    },
     setCategory(state, value) {
       state.category = value;
     },
-    fillNews(state, { data, loading, error }) {
-      state.news = { data: data, loading: loading, error: error };
+    setLoading(state, value) {
+      state.loading = value;
+    },
+    fillNews(state, value) {
+      state.news = value;
     },
   },
   actions: {
     async getNews({ commit }, category) {
       const cnn = new CNN();
+      commit("setLoading", true);
       let newsData = [];
       try {
         switch (category) {
@@ -67,9 +76,22 @@ export default createStore({
             newsData = await cnn.index();
             break;
         }
-        commit("fillNews", { data: newsData, loading: false });
+        commit("setLoading", false);
+        commit("fillNews", newsData);
       } catch (e) {
-        commit("fillNews", { data: [], loading: false });
+        commit("setLoading", false);
+        commit("openAlert", { state: true, msg: e.message });
+      }
+    },
+    async searchNews({ commit }, keyword) {
+      commit("setLoading", true);
+      const cnn = new CNN();
+      try {
+        const result = await cnn.search(keyword);
+        commit("setLoading", false);
+        commit("fillNews", result);
+      } catch (error) {
+        commit("setLoading", false);
         commit("openAlert", { state: true, msg: e.message });
       }
     },

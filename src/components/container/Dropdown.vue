@@ -2,24 +2,15 @@
   <div
     class="absolute top-6 right-0 z-10 p-1 w-[4.375rem] bg-[#f9f9f9] rounded"
   >
-    <button
-      @click="
-        store.commit('openAlert', {
-          state: true,
-          msg: 'Ini tombol detail',
-        })
-      "
-      class="w-full text-left text-sm text-red-300 hover:text-red-500"
+    <a
+      class="w-full text-left text-sm text-red-300 hover:text-red-500 hover:no-underline"
+      :href="link"
+      target="_blank"
     >
       Detail
-    </button>
+    </a>
     <button
-      @click="
-        store.commit('openAlert', {
-          state: true,
-          msg: 'Ini tombol summary',
-        })
-      "
+      @click="store.commit('openModal')"
       class="w-full text-left text-sm text-green-300 hover:text-green-500"
     >
       Summary
@@ -42,5 +33,6 @@
 <script setup>
 import { useStore } from "vuex";
 
+const props = defineProps({ link: String });
 const store = useStore();
 </script>

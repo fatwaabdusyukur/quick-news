@@ -72,7 +72,7 @@ import Newslist from "../list/Newslist.vue";
 const store = useStore();
 const open = computed(() => store.state.open);
 const category = computed(() => store.state.category);
-const loading = computed(() => store.state.news.loading);
+const loading = computed(() => store.state.loading);
 
 onMounted(async () => await store.dispatch("getNews", category));
 watch(
