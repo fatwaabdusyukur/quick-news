@@ -4,8 +4,13 @@
   "version": "1.0",
   "description": "A simple Chrome extension built with Vuejs.",
   "permissions": ["tabs", "activeTab", "storage", "history"],
+  "host_permissions": ["https://*.openai.com/"],
   "icons": {
     "128": "/img/logo.png"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';",

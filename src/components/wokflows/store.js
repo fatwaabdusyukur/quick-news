@@ -9,7 +9,7 @@ export default createStore({
       input: false,
       popovers: false,
       alert: { state: false, msg: "" },
-      modal: false,
+      modal: { state: false, summary: "" },
       category: 0,
       loading: true,
       news: [],
@@ -28,8 +28,8 @@ export default createStore({
     openAlert(state, value) {
       state.alert = value;
     },
-    openModal(state) {
-      state.modal = !state.modal;
+    openModal(state, value) {
+      state.modal = value;
     },
     setCategory(state, value) {
       state.category = value;

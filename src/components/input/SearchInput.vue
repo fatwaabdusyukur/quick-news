@@ -30,7 +30,10 @@ const state = computed(() => store.state.input);
 const text = ref("");
 const show = ref(false);
 
-const closeInput = () => store.commit("openInput");
+const closeInput = () => {
+  store.commit("openInput");
+  text.value = "";
+};
 const search = async (keyword) => await store.dispatch("searchNews", keyword);
 
 watch(text, (newText, oldText) => (show.value = newText !== ""));

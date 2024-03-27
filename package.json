@@ -8,6 +8,7 @@
     "clean": "rmdir /s /q dist"
   },
   "dependencies": {
+    "chatgpt": "^5.2.5",
     "ts-sastrawi": "^1.0.1",
     "vue": "^3.4.21"
   },

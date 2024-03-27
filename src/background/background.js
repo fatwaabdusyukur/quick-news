@@ -1,10 +1,14 @@
-import { getFileJSON, setDataToStorage } from "@/services/storage";
+import {
+  getDataFromStorage,
+  getFileJSON,
+  setDataToStorage,
+} from "@/services/storage";
 
 const runtime = chrome.runtime;
+const cnnURL = "https://www.cnnindonesia.com";
 
 async function getHistories() {
   try {
-    const cnnURL = "https://www.cnnindonesia.com";
     const kMillisecondsPerMonth = 1000 * 60 * 60 * 24 * 30;
     const kOneMonthAgo = new Date().getTime() - kMillisecondsPerMonth;
 
@@ -57,4 +61,24 @@ runtime.onInstalled.addListener(async (details) => {
       });
     }
   }
+});
+
+chrome.history.onVisited.addListener(async (historyItem) => {
+  const { history } = await getDataFromStorage("history");
+
+  if (historyItem.url.includes(cnnURL)) {
+    if (history === undefined) {
+      const historyItems = await getHistories();
+      await setDataToStorage("history", historyItems);
+    }
+
+    if (history.includes(historyItem.url) === false) {
+      const newHistory = [...history, historyItem.url];
+      await setDataToStorage("history", newHistory);
+    }
+  }
+});
+
+runtime.onMessage.addListener((msg) => {
+  if (msg.action === "options") chrome.tabs.create({ url: runtime.getURL('options.html') });
 });

@@ -10,7 +10,6 @@
       Detail
     </a>
     <button
-      @click="store.commit('openModal')"
       class="w-full text-left text-sm text-green-300 hover:text-green-500"
     >
       Summary

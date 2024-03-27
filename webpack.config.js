@@ -27,6 +27,7 @@ module.exports = {
   entry: {
     content: path.resolve(__dirname, "./src/content/content.js"),
     background: path.resolve(__dirname, "./src/background/background.js"),
+    options: path.resolve(__dirname, "./src/options/options.js"),
   },
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -85,6 +86,7 @@ module.exports = {
         { from: "src/assets/fonts/roboto.ttf", to: "fonts/roboto.ttf" },
         { from: "src/assets/data/news.json", to: "data/news.json" },
         { from: "src/assets/data/model.json", to: "data/model.json" },
+        { from: "src/options/options.html", to: "options.html" },
       ],
     }),
     new CleanWebpackPlugin(),

@@ -20,7 +20,7 @@
                 class="w-[1.4rem] h-[1.4rem] text-[#e0d7f9] hover:text-blue-300 stroke-2"
               />
             </button>
-            <button>
+            <button @click="openOption">
               <Cog6ToothIcon
                 class="w-[1.4rem] h-[1.4rem] text-[#e0d7f9] hover:text-blue-300 stroke-2"
               />
@@ -79,4 +79,6 @@ watch(
   category,
   async (newCat, oldCat) => await store.dispatch("getNews", newCat)
 );
+
+const openOption = () => chrome.runtime.sendMessage({ action: "options" });
 </script>

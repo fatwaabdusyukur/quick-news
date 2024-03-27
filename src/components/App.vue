@@ -17,5 +17,7 @@ const store = useStore();
 chrome.runtime.onMessage.addListener((message) => {
   if (message.action === "history-alert")
     store.commit("openAlert", { state: true, msg: message.msg });
+  if (message.action === "unauthorized")
+    store.commit("openAlert", { state: true, msg: message.msg });
 });
 </script>
