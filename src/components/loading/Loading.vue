@@ -2,7 +2,7 @@
   <div class="relative w-full h-full">
     <span
       v-for="index in 5"
-      class="absolute top-1/4 right-1/2 w-5 h-5 bg-blue-500 rounded-full animate-[loading_1s_linear_infinite]"
+      class="absolute top-[60%] right-1/2 w-5 h-5 bg-blue-500 rounded-full animate-[loading_1s_linear_infinite]"
       :style="{ ...position(index), ...delay(index) }"
     ></span>
   </div>

@@ -34,3 +34,11 @@ export async function setDataToStorage(key, value) {
     console.error("Error setting data to storage:", error);
   }
 }
+
+export async function removeDataFromStorage(key) {
+  try {
+    await cs.remove(key);
+  } catch (error) {
+    console.error("Error removing data from storage:", error);
+  }
+}

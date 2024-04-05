@@ -1,5 +1,6 @@
 import CNN from "@/services/cnn";
 import { getRecommendations } from "@/services/recommendation";
+import { removeDataFromStorage, setDataToStorage } from "@/services/storage";
 import { createStore } from "vuex";
 
 export default createStore({
@@ -12,7 +13,44 @@ export default createStore({
       modal: { state: false, summary: "" },
       category: 0,
       loading: true,
+      flyingImg: chrome.runtime.getURL("/img/logo.png"),
+      turn: false,
+      radio: [
+        { id: "free", label: "FREE", RPM: 200, RPD: 3, TPM: 40000 },
+        { id: "tier1", label: "TIER 1", RPM: 3500, RPD: 10000, TPM: 60000 },
+        {
+          id: "tier2",
+          label: "TIER 2",
+          RPM: 3500,
+          RPD: "Unlimited",
+          TPM: 80000,
+        },
+        {
+          id: "tier3",
+          label: "TIER 3",
+          RPM: 3500,
+          RPD: "Unlimited",
+          TPM: 160000,
+        },
+        {
+          id: "tier4",
+          label: "TIER 4",
+          RPM: 10000,
+          RPD: "Unlimited",
+          TPM: 1000000,
+        },
+        {
+          id: "tier5",
+          label: "TIER 5",
+          RPM: 10000,
+          RPD: "Unlimited",
+          TPM: 2000000,
+        },
+      ],
       news: [],
+      logo: chrome.runtime.getURL("/img/logo.png"),
+      closeImg: chrome.runtime.getURL("/img/close.png"),
+      options: { status: false, api: "", radio: {} },
     };
   },
   mutations: {
@@ -34,11 +72,21 @@ export default createStore({
     setCategory(state, value) {
       state.category = value;
     },
+    setTurn(state, value) {
+      state.turn = value;
+    },
+    setImg(state) {
+      state.flyingImg =
+        state.flyingImg === state.logo ? state.closeImg : state.logo;
+    },
     setLoading(state, value) {
       state.loading = value;
     },
     fillNews(state, value) {
       state.news = value;
+    },
+    setOptions(state, value) {
+      state.options = value;
     },
   },
   actions: {
@@ -94,6 +142,31 @@ export default createStore({
         commit("setLoading", false);
         commit("openAlert", { state: true, msg: e.message });
       }
+    },
+    async submitOptions({ commit }, options) {
+      const { api, choice } = options;
+      if (api !== "" && choice !== "") {
+        const [tier, RPM, RPD, TPM] = choice.split(":");
+        await setDataToStorage("api", api);
+        commit("setOptions", {
+          status: true,
+          api: api,
+          radio: { tier: tier, rpm: RPM, rpd: RPD, tpm: TPM },
+        });
+      } else {
+        commit("openAlert", { state: true, msg: "Please fill the form!!!" });
+      }
+    },
+    async removeOptions({ commit }) {
+      await removeDataFromStorage("api");
+      commit("setOptions", { status: false, api: "", radio: {} });
+    },
+    async changeFlyingImg({ commit }) {
+      commit("setTurn", true);
+      setTimeout(() => {
+        commit("setImg");
+        commit("setTurn", false);
+      }, 1400);
     },
   },
 });

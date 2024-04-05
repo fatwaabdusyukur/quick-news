@@ -13,39 +13,15 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
-const turn = ref(true);
-const image = ref(getImageFromUrl("/img/logo.png"));
+const turn = computed(() => store.state.turn);
+const image = computed(() => store.state.flyingImg);
 
-function getImageFromUrl(path) {
-  return chrome.runtime.getURL(path);
-}
-
-function loadImage(path) {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => resolve();
-    img.onerror = (error) => reject(error);
-    img.src = path;
-  });
-}
-
-function changeImage() {
+async function changeImage() {
+  await store.dispatch("changeFlyingImg");
   store.commit("openBox");
-  turn.value = false;
-
-  loadImage(image.value)
-    .then(() => {
-      image.value =
-        image.value === getImageFromUrl("/img/logo.png")
-          ? getImageFromUrl("/img/close.png")
-          : getImageFromUrl("/img/logo.png");
-
-      turn.value = true;
-    })
-    .catch((e) => console.error("Error when getting image for button: " + e));
 }
 </script>
