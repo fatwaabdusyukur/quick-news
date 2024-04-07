@@ -1,3 +1,4 @@
+import { generateSummary } from "@/services/chatgpt";
 import CNN from "@/services/cnn";
 import { getRecommendations } from "@/services/recommendation";
 import {
@@ -191,7 +192,17 @@ export default createStore({
       } else {
         try {
           const { result } = await cnn.detail(url);
-          commit("openModal", { state: true, summary: result.body });
+          const article = result.body;
+          if (article !== "") {
+            await generateSummary(article, (answer) => {
+              commit("openModal", { state: true, summary: answer });
+            });
+          } else {
+            commit("openAlert", {
+              state: true,
+              msg: "This news doesnt have content!!!",
+            });
+          }
         } catch (error) {
           commit("openAlert", { state: true, msg: error });
         }

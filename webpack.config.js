@@ -2,11 +2,12 @@ const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const CSPWebpackPlugin = require("csp-html-webpack-plugin");
+const ZipPlugin = require("zip-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 const { argv } = require("process");
 const webpack = require("webpack");
 
-const isProduction = argv.mode === "production";
+const isProduction = argv[3] === "production";
 
 const fileExtensions = [
   "jpg",
@@ -20,6 +21,40 @@ const fileExtensions = [
   "woff",
   "woff2",
 ];
+
+const plugins = [
+  new CopyPlugin({
+    patterns: [
+      { from: "src/manifest.json", to: "manifest.json" },
+      { from: "src/assets/img/logo.png", to: "img/logo.png" },
+      { from: "src/assets/img/close.png", to: "img/close.png" },
+      { from: "src/assets/css/style.css", to: "style.css" },
+      { from: "src/assets/data/news.json", to: "data/news.json" },
+      { from: "src/assets/data/model.json", to: "data/model.json" },
+      { from: "src/options/options.html", to: "options.html" },
+    ],
+  }),
+  new CleanWebpackPlugin(),
+  new VueLoaderPlugin(),
+  new CSPWebpackPlugin({
+    "object-src": "'self'",
+    "script-src": ["'self'"],
+  }),
+  new webpack.DefinePlugin({
+    __VUE_OPTIONS_API__: "true",
+    __VUE_PROD_DEVTOOLS__: "false",
+    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: "false",
+  }),
+];
+
+if (isProduction) {
+  plugins.push(
+    new ZipPlugin({
+      path: path.resolve(__dirname),
+      filename: "bundle.zip",
+    })
+  );
+}
 
 module.exports = {
   devtool: isProduction ? "source-map" : "cheap-module-source-map",
@@ -75,30 +110,7 @@ module.exports = {
     ],
   },
 
-  plugins: [
-    new CopyPlugin({
-      patterns: [
-        { from: "src/manifest.json", to: "manifest.json" },
-        { from: "src/assets/img/logo.png", to: "img/logo.png" },
-        { from: "src/assets/img/close.png", to: "img/close.png" },
-        { from: "src/assets/css/style.css", to: "style.css" },
-        { from: "src/assets/data/news.json", to: "data/news.json" },
-        { from: "src/assets/data/model.json", to: "data/model.json" },
-        { from: "src/options/options.html", to: "options.html" },
-      ],
-    }),
-    new CleanWebpackPlugin(),
-    new VueLoaderPlugin(),
-    new CSPWebpackPlugin({
-      "object-src": "'self'",
-      "script-src": ["'self'"],
-    }),
-    new webpack.DefinePlugin({
-      __VUE_OPTIONS_API__: "true",
-      __VUE_PROD_DEVTOOLS__: "false",
-      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: "false",
-    }),
-  ],
+  plugins: plugins,
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),

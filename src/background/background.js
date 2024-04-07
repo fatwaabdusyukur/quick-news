@@ -54,11 +54,6 @@ runtime.onInstalled.addListener(async (details) => {
     const histories = await getHistories();
     if (histories.length > 0 && histories !== undefined) {
       await setDataToStorage("history", histories);
-    } else {
-      runtime.sendMessage({
-        action: "history-alert",
-        msg: "No articles found in the history browser!",
-      });
     }
   }
 });
@@ -80,5 +75,7 @@ chrome.history.onVisited.addListener(async (historyItem) => {
 });
 
 runtime.onMessage.addListener((msg) => {
-  if (msg.action === "options") chrome.tabs.create({ url: runtime.getURL('options.html') });
+  if (msg.action === "options") {
+    chrome.tabs.create({ url: runtime.getURL("options.html") });
+  }
 });
