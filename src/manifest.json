@@ -32,8 +32,6 @@
       "resources": [
         "/img/logo.png",
         "/img/close.png",
-        "/fonts/marcellus.ttf",
-        "/fonts/roboto.ttf",
         "/data/news.json",
         "/data/model.json"
       ],

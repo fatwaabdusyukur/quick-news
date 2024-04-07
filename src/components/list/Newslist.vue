@@ -1,14 +1,16 @@
 <template>
   <ul class="w-full h-full py-2">
     <li
-      class="relative w-full p-1 bg-[#ececec] rounded mx-1 my-2"
+      class="relative w-full p-1 bg-gray-100 rounded mx-1 my-2"
       v-for="({ title, link }, index) in articles"
     >
-      <p class="whitespace-nowrap overflow-x-hidden text-ellipsis text-lg">
+      <p
+        class="font-nunito whitespace-nowrap overflow-x-hidden text-ellipsis text-lg"
+      >
         {{ title }}
       </p>
       <div
-        class="absolute right-0 top-0 flex justify-center items-center w-[10%] h-full bg-[#ececec] rounded-r shadow-md"
+        class="absolute right-0 top-0 flex justify-center items-center w-[10%] h-full bg-gray-100 rounded-r shadow-md"
       >
         <button
           class="w-full h-full inline-flex justify-center items-center"

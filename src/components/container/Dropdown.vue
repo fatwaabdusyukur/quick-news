@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="absolute top-6 right-0 z-10 p-1 w-[4.375rem] bg-[#f9f9f9] rounded"
-  >
+  <div class="absolute top-6 right-0 z-10 p-1 w-[4.375rem] bg-gray-200 rounded">
     <a
       class="w-full text-left text-sm text-red-300 hover:text-red-500 hover:no-underline"
       :href="link"
@@ -10,6 +8,7 @@
       Detail
     </a>
     <button
+      @click="getSummary(link)"
       class="w-full text-left text-sm text-green-300 hover:text-green-500"
     >
       Summary
@@ -34,4 +33,6 @@ import { useStore } from "vuex";
 
 const props = defineProps({ link: String });
 const store = useStore();
+
+const getSummary = async (url) => await store.dispatch("getSummary", url);
 </script>

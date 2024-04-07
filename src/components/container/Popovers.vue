@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="show"
-    class="absolute p-2 w-52 z-10 bg-[#f9f9f9] rounded border-1 border-gray-400 shadow-md right-[24.7rem] bottom-44 after:content-[''] after:absolute after:top-[10%] after:-right-[17.5px] after:w-0 after:h-0 after:border-x-[.625rem] after:border-x-transparent after:border-b-[.94rem] after:border-b-[#f9f9f9] after:rotate-90 before:content-[''] before:absolute before:top-[10%] before:-right-[20.5px] before:w-0 before:h-0 before:border-x-[.69rem] before:border-x-transparent before:border-b-[1rem] before:border-b-[#e3e3e3] before:rotate-90"
+    class="absolute p-2 w-52 z-10 bg-gray-200 rounded border-1 border-gray-400 shadow-md right-[24.7rem] bottom-44 after:content-[''] after:absolute after:top-[10%] after:-right-[17.5px] after:w-0 after:h-0 after:border-x-[.625rem] after:border-x-transparent after:border-b-[.94rem] after:border-b-gray-200 after:rotate-90 before:content-[''] before:absolute before:top-[10%] before:-right-[20.5px] before:w-0 before:h-0 before:border-x-[.69rem] before:border-x-transparent before:border-b-[1rem] before:border-b-gray-300 before:rotate-90"
   >
     <ul v-for="({ text, icon }, index) in contents">
       <li>
@@ -9,7 +9,12 @@
           class="inline-flex w-full justify-between"
           @click="changeCategory(index)"
         >
-          <p :class="{ 'text-blue-400': active === index }">{{ text }}</p>
+          <p
+            :class="{ 'text-blue-400': active === index }"
+            class="font-roboto font-normal text-sm"
+          >
+            {{ text }}
+          </p>
           <component
             :is="icon"
             class="w-4 h-4"

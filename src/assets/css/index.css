@@ -2,12 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "marcellus";
-  src: url("./../fonts/marcellus.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "roboto";
-  src: url("./../fonts/roboto.ttf") format("truetype");
+@layer base {
+  @import url("https://fonts.googleapis.com/css2?family=Marcellus&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Marcellus&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 }

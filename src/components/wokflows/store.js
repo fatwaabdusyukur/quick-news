@@ -1,7 +1,13 @@
 import CNN from "@/services/cnn";
 import { getRecommendations } from "@/services/recommendation";
-import { removeDataFromStorage, setDataToStorage } from "@/services/storage";
+import {
+  getDataFromStorage,
+  removeDataFromStorage,
+  setDataToStorage,
+} from "@/services/storage";
 import { createStore } from "vuex";
+
+const cnn = new CNN();
 
 export default createStore({
   state() {
@@ -14,6 +20,7 @@ export default createStore({
       category: 0,
       loading: true,
       flyingImg: chrome.runtime.getURL("/img/logo.png"),
+      tooltips: false,
       turn: false,
       radio: [
         { id: "free", label: "FREE", RPM: 200, RPD: 3, TPM: 40000 },
@@ -50,7 +57,7 @@ export default createStore({
       news: [],
       logo: chrome.runtime.getURL("/img/logo.png"),
       closeImg: chrome.runtime.getURL("/img/close.png"),
-      options: { status: false, api: "", radio: {} },
+      options: { status: false, api: "", prompt: "", radio: {} },
     };
   },
   mutations: {
@@ -68,6 +75,9 @@ export default createStore({
     },
     openModal(state, value) {
       state.modal = value;
+    },
+    openTooltips(state, value) {
+      state.tooltips = value;
     },
     setCategory(state, value) {
       state.category = value;
@@ -91,7 +101,6 @@ export default createStore({
   },
   actions: {
     async getNews({ commit }, category) {
-      const cnn = new CNN();
       commit("setLoading", true);
       let newsData = [];
       try {
@@ -133,7 +142,6 @@ export default createStore({
     },
     async searchNews({ commit }, keyword) {
       commit("setLoading", true);
-      const cnn = new CNN();
       try {
         const result = await cnn.search(keyword);
         commit("setLoading", false);
@@ -144,13 +152,18 @@ export default createStore({
       }
     },
     async submitOptions({ commit }, options) {
-      const { api, choice } = options;
-      if (api !== "" && choice !== "") {
+      const { api, choice, questions } = options;
+      if (api !== "" && choice !== "" && questions !== "") {
         const [tier, RPM, RPD, TPM] = choice.split(":");
-        await setDataToStorage("api", api);
+        await setDataToStorage("options", {
+          api: api,
+          prompt: questions,
+          option: { tier: tier, rpm: RPM, rpd: RPD, tpm: TPM },
+        });
         commit("setOptions", {
           status: true,
           api: api,
+          prompt: questions,
           radio: { tier: tier, rpm: RPM, rpd: RPD, tpm: TPM },
         });
       } else {
@@ -158,8 +171,8 @@ export default createStore({
       }
     },
     async removeOptions({ commit }) {
-      await removeDataFromStorage("api");
-      commit("setOptions", { status: false, api: "", radio: {} });
+      await removeDataFromStorage("options");
+      commit("setOptions", { status: false, api: "", prompt: "", radio: {} });
     },
     async changeFlyingImg({ commit }) {
       commit("setTurn", true);
@@ -167,6 +180,34 @@ export default createStore({
         commit("setImg");
         commit("setTurn", false);
       }, 1400);
+    },
+    async getSummary({ commit }, url) {
+      const { options } = await getDataFromStorage("options");
+      if (options === undefined) {
+        commit("openAlert", {
+          state: true,
+          msg: "The API Key has not been set!!!",
+        });
+      } else {
+        try {
+          const { result } = await cnn.detail(url);
+          commit("openModal", { state: true, summary: result.body });
+        } catch (error) {
+          commit("openAlert", { state: true, msg: error });
+        }
+      }
+    },
+    async checkOptions({ commit }) {
+      const { options } = await getDataFromStorage("options");
+      if (options !== undefined) {
+        const { api, prompt, option } = options;
+        commit("setOptions", {
+          status: true,
+          api: api,
+          prompt: prompt,
+          radio: option,
+        });
+      }
     },
   },
 });

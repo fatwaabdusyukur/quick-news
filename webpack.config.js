@@ -82,8 +82,6 @@ module.exports = {
         { from: "src/assets/img/logo.png", to: "img/logo.png" },
         { from: "src/assets/img/close.png", to: "img/close.png" },
         { from: "src/assets/css/style.css", to: "style.css" },
-        { from: "src/assets/fonts/marcellus.ttf", to: "fonts/marcellus.ttf" },
-        { from: "src/assets/fonts/roboto.ttf", to: "fonts/roboto.ttf" },
         { from: "src/assets/data/news.json", to: "data/news.json" },
         { from: "src/assets/data/model.json", to: "data/model.json" },
         { from: "src/options/options.html", to: "options.html" },

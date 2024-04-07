@@ -1,6 +1,6 @@
 <template>
   <button
-    class="fixed right-6 bottom-[0.625rem] p-2 w-10 h-10 rounded-full bg-[#7bb4e3] flex justify-center items-center hover:bg-[#4e97d1]"
+    class="fixed right-6 bottom-[0.625rem] p-2 w-10 h-10 rounded-full bg-blue-400 flex justify-center items-center hover:bg-blue-500"
     @click="changeImage"
   >
     <img

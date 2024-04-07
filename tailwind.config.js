@@ -21,8 +21,9 @@ export default {
       },
     },
     fontFamily: {
-      marcellus: "marcellus",
-      roboto: "roboto",
+      marcellus: ["Marcellus", "serif"],
+      roboto: ["Roboto Mono", "monospace", "sans-serif"],
+      nunito: ["Nunito", "sans-serif"],
     },
   },
   plugins: [],

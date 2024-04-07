@@ -2,27 +2,27 @@
   <Popovers />
   <Transition>
     <div
-      class="fixed right-[4.375rem] bottom-[.625rem] w-[18.75rem] h-[21.875rem] rounded bg-[#f9f9f9] shadow-md overflow-hidden"
+      class="fixed right-[4.375rem] bottom-[.625rem] w-[18.75rem] h-[21.875rem] rounded bg-gray-200 shadow-md overflow-hidden"
       v-if="open"
     >
       <div
-        class="relative p-[.625rem] bg-[#7bb4e3] rounded-t-[.25rem] flex flex-col items-center"
+        class="relative p-[.625rem] bg-blue-400 rounded-t-[.25rem] flex flex-col items-center"
       >
         <div class="flex justify-between items-center w-full">
           <div class="flex justify-between items-center basis-[30%]">
             <button @click="() => store.commit('openPopovers')">
               <ArrowLeftOnRectangleIcon
-                class="w-[1.4rem] h-[1.4rem] text-[#e0d7f9] hover:text-blue-300 stroke-2"
+                class="w-[1.4rem] h-[1.4rem] text-gray-300 hover:text-blue-300 stroke-2"
               />
             </button>
             <button @click="() => store.commit('openInput')">
               <MagnifyingGlassIcon
-                class="w-[1.4rem] h-[1.4rem] text-[#e0d7f9] hover:text-blue-300 stroke-2"
+                class="w-[1.4rem] h-[1.4rem] text-gray-300 hover:text-blue-300 stroke-2"
               />
             </button>
             <button @click="openOption">
               <Cog6ToothIcon
-                class="w-[1.4rem] h-[1.4rem] text-[#e0d7f9] hover:text-blue-300 stroke-2"
+                class="w-[1.4rem] h-[1.4rem] text-gray-300 hover:text-blue-300 stroke-2"
               />
             </button>
           </div>
